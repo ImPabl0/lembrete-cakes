@@ -10,6 +10,10 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 class SQLiteController {
   static Database? _db;
 
+  static Future<Database> getDatabase() async {
+    return _db ?? await startDB();
+  }
+
   static Future<Database> startDB() async {
     Directory directory = await getApplicationDocumentsDirectory();
     late Database result;
@@ -25,6 +29,8 @@ class SQLiteController {
         batch.execute(DatabaseHelpers.produtoCreateQuery);
         batch.execute(DatabaseHelpers.valorCaracteristicaCreateQuery);
         batch.execute(DatabaseHelpers.enderecoCreateQuery);
+
+        batch.execute(DatabaseHelpers.formasDePagamentoDefault);
         batch.commit();
       },
     );
