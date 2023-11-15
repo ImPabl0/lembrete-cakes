@@ -2,29 +2,65 @@ import 'dart:convert';
 
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class Produto {
+  int id;
   String nome;
   String descricao;
   Produto({
+    required this.id,
     required this.nome,
     required this.descricao,
   });
 
+  Produto copyWith({
+    int? id,
+    String? nome,
+    String? descricao,
+  }) {
+    return Produto(
+      id: id ?? this.id,
+      nome: nome ?? this.nome,
+      descricao: descricao ?? this.descricao,
+    );
+  }
+
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      'id': id,
       'nome': nome,
       'descricao': descricao,
     };
   }
 
+  factory Produto.fromSQLite(Map<String, dynamic> map) {
+    return Produto(
+      id: map['id'] as int,
+      nome: map['nome'] as String,
+      descricao: map['descricao_produto'] as String,
+    );
+  }
   factory Produto.fromMap(Map<String, dynamic> map) {
     return Produto(
-      nome: map['nome'],
-      descricao: map['descricao'],
+      id: map['id'] as int,
+      nome: map['nome'] as String,
+      descricao: map['descricao_produto'] as String,
     );
   }
 
   String toJson() => json.encode(toMap());
 
   factory Produto.fromJson(String source) =>
-      Produto.fromMap(json.decode(source) as Map<String, dynamic>);
+      Produto.fromSQLite(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() => 'Produto(id: $id, nome: $nome, descricao: $descricao)';
+
+  @override
+  bool operator ==(covariant Produto other) {
+    if (identical(this, other)) return true;
+
+    return other.id == id && other.nome == nome && other.descricao == descricao;
+  }
+
+  @override
+  int get hashCode => id.hashCode ^ nome.hashCode ^ descricao.hashCode;
 }
