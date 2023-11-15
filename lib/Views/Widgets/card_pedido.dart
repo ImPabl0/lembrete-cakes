@@ -36,7 +36,7 @@ class CardPedido extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  pedido.cliente.nome,
+                  pedido.cliente?.nome ?? "",
                   style:
                       const TextStyle(fontSize: 15, color: Color(0xFF493A33)),
                 ),
@@ -45,7 +45,7 @@ class CardPedido extends StatelessWidget {
                     Transform.scale(
                       scale: 1.3,
                       child: const Icon(
-                        Icons.schedule,
+                        Icons.calendar_month,
                         size: 15,
                         color: Color(0xFF493A33),
                       ),
@@ -54,7 +54,8 @@ class CardPedido extends StatelessWidget {
                       child: Container(
                           alignment: Alignment.centerLeft,
                           margin: const EdgeInsets.only(left: 10),
-                          child: Text(pedido.dataDaEntrega.horaFormatada)),
+                          child: Text(
+                              "Prazo até ${pedido.dataDaEntrega.dataFormatada}")),
                     ),
                   ],
                 )
