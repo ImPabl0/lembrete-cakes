@@ -1,5 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lembrete_cakes/Features/common/pedidos_controller/bloc/pedidos_bloc.dart';
 import 'package:lembrete_cakes/Features/index/components/custom_bottom_navigator.dart';
 import 'package:lembrete_cakes/Features/pedido/pedido_page.dart';
 import 'package:lembrete_cakes/Features/search/search_page.dart';
@@ -27,18 +29,6 @@ class IndexBody extends StatefulWidget {
 }
 
 class _IndexBodyState extends State<IndexBody> {
-  List<Pedido> pedidos = [
-    // Pedido(
-    //     cliente: Cliente(
-    //         nome: "Pablo",
-    //         endereco: "Ali",
-    //         telefone: "tal",
-    //         email: "@gmail.com"),
-    //     produto: Bolo(caracteristica: "Grande"),
-    //     dataDoPedido: DateTime.now(),
-    //     dataDaEntrega: DateTime.now()),
-  ];
-
   List<MenuItem> menu = [
     MenuItem(name: "Início", icon: Icons.home),
     MenuItem(name: "Buscar", icon: Icons.search),
@@ -62,7 +52,7 @@ class _IndexBodyState extends State<IndexBody> {
                   Expanded(
                       child: PageView(
                     controller: pageController,
-                    children: [PedidoPage(pedidos: pedidos), SearchPage()],
+                    children: [PedidoPage(), SearchPage()],
                   )),
                   CustomBottomNavigator(
                     pageController: pageController,
