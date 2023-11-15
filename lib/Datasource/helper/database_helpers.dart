@@ -61,9 +61,10 @@ CREATE TABLE caracteristica (
 CREATE TABLE cliente ( 
 	id                   INTEGER NOT NULL  PRIMARY KEY  ,
 	nome                 VARCHAR(255)     ,
-	telefone             VARCHAR(11)     ,
+	telefone             VARCHAR(20)     ,
 	email                VARCHAR(255)     ,
-	FOREIGN KEY ( id ) REFERENCES pedido( id_cliente )  
+	PRIMARY KEY("id"),
+	UNIQUE("id")
  );
     """;
   }
@@ -108,5 +109,14 @@ CREATE TABLE endereco (
  );
 
     """;
+  }
+
+  static String get formasDePagamentoDefault {
+    return """
+INSERT INTO "forma_de_pagamento" ("nome") VALUES ('PIX');
+INSERT INTO "forma_de_pagamento" ("nome") VALUES ('DINHEIRO');
+INSERT INTO "forma_de_pagamento" ("nome") VALUES ('CARTÃO DE CRÉDITO');
+INSERT INTO "forma_de_pagamento" ("nome") VALUES ('CARTÃO DE DÉBITO');
+""";
   }
 }
