@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 
 class MenuItem {
-  String name;
-  IconData icon;
-  MenuItem({
-    required this.name,
-    required this.icon,
-  });
+  final String name;
+  final IconData icon;
+  final Widget page;
+  final bool shouldNavigateTo;
+  const MenuItem(
+      {required this.name,
+      required this.icon,
+      required this.page,
+      this.shouldNavigateTo = false});
 }
 
 class CustomBottomNavigator extends StatefulWidget {
@@ -62,7 +65,7 @@ class _CustomBottomNavigatorState extends State<CustomBottomNavigator> {
                 child: InkWell(
                   onTap: () {
                     widget.pageController.animateToPage(index,
-                        duration: Duration(milliseconds: 600),
+                        duration: const Duration(milliseconds: 600),
                         curve: Curves.decelerate);
                     setState(() {
                       currentSelectedItem = itemAtual;

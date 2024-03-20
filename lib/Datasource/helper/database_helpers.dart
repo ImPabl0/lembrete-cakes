@@ -10,25 +10,24 @@ class DatabaseHelpers {
 
   static String get pedidoCreateQuery {
     return """
-    CREATE TABLE pedido ( 
-	id                   INTEGER NOT NULL  PRIMARY KEY  ,
-	id_cliente           INTEGER     ,
-	data_pedido          DATE  DEFAULT (date('now'))   ,
-	data_entrega         DATE  DEFAULT (date('now', '+30 days'))   ,
-	id_produto           INTEGER     ,
-	descricao            VARCHAR(255)     ,
-	referencia           BLOB     ,
-	id_forma_de_pagamento INTEGER     ,
-	orcamento_do_pedido  FLOAT     ,
-	quantidade           FLOAT     ,
-	status               VARCHAR(40)     ,
-	CONSTRAINT unq_pedidos_id_produto UNIQUE ( id_produto ),
-	CONSTRAINT unq_pedido_id_cliente UNIQUE ( id_cliente ),
-	FOREIGN KEY ( id_forma_de_pagamento ) REFERENCES forma_de_pagamento( id )  ,
-	FOREIGN KEY ( id_produto ) REFERENCES produto( id )  
- );
-
-
+    CREATE TABLE "pedido" (
+	"id"	INTEGER NOT NULL,
+	"id_cliente"	INTEGER,
+	"data_pedido"	DATE DEFAULT (date('now')),
+	"data_entrega"	DATE DEFAULT (date('now', '+30 days')),
+	"id_produto"	INTEGER,
+	"descricao"	VARCHAR(255),
+	"referencia"	BLOB,
+	"id_forma_de_pagamento"	INTEGER,
+	"orcamento_do_pedido"	REAL,
+	"quantidade"	REAL NOT NULL,
+	"status"	VARCHAR(40),
+	FOREIGN KEY("id_produto") REFERENCES "produto"("id"),
+	FOREIGN KEY("id_forma_de_pagamento") REFERENCES "forma_de_pagamento"("id"),
+	PRIMARY KEY("id"),
+	CONSTRAINT "unq_pedidos_id_produto" UNIQUE("id_produto"),
+	CONSTRAINT "unq_pedido_id_cliente" UNIQUE("id_cliente")
+);
     """;
   }
 
@@ -37,7 +36,7 @@ class DatabaseHelpers {
    CREATE TABLE produto ( 
 	id                   INTEGER NOT NULL  PRIMARY KEY  ,
 	nome                 VARCHAR(255)     ,
-	descricao_produto    VARCHAR(255)     ,
+	descricao_produto    VARCHAR(255)     
  );
 
     """;
@@ -62,9 +61,7 @@ CREATE TABLE cliente (
 	id                   INTEGER NOT NULL  PRIMARY KEY  ,
 	nome                 VARCHAR(255)     ,
 	telefone             VARCHAR(20)     ,
-	email                VARCHAR(255)     ,
-	PRIMARY KEY("id"),
-	UNIQUE("id")
+	email                VARCHAR(255)    
  );
     """;
   }

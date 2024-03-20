@@ -11,6 +11,7 @@ import 'package:lembrete_cakes/Models/produto.dart';
 import 'forma_de_pagamento.dart';
 
 class Pedido {
+  int? id;
   Cliente? cliente;
   Produto? produto;
   double quantidade;
@@ -24,6 +25,7 @@ class Pedido {
 
   FormaDePagamento? formaDePagamento;
   Pedido({
+    this.id,
     required this.cliente,
     required this.produto,
     required this.quantidade,
@@ -41,8 +43,8 @@ class Pedido {
       'cliente': cliente?.toMap(),
       'produto': produto?.toMap(),
       'quantidade': quantidade,
-      'dataDoPedido': dataDoPedido.millisecondsSinceEpoch,
-      'dataDaEntrega': dataDaEntrega.millisecondsSinceEpoch,
+      'dataDoPedido': dataDoPedido.millisecondsSinceEpoch, //Troca isso
+      'dataDaEntrega': dataDaEntrega.millisecondsSinceEpoch, //Troca isso
       'descricao': descricao,
       'referencia': referencia,
       'orcamentoDoPedido': orcamentoDoPedido,
@@ -88,6 +90,7 @@ class Pedido {
     ///Todos os parâmetros setados como [null] precisam ser setados posteriormente.
     DateFormat dateFormat = DateFormat("yyyy-MM-dd");
     return Pedido(
+      id: map['id'],
       cliente: null,
       produto: null,
       quantidade: map['quantidade'],
@@ -106,15 +109,4 @@ class Pedido {
 
   factory Pedido.fromJson(String source) =>
       Pedido.fromMap(json.decode(source) as Map<String, dynamic>);
-}
-
-extension DateExtension on DateTime {
-  String get horaFormatada {
-    String string = toString();
-    return string.split(" ").last.substring(0, 5);
-  }
-
-  String get dataFormatada {
-    return DateFormat("dd/MM/yyyy").format(this);
-  }
 }

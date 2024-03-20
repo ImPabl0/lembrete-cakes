@@ -9,12 +9,17 @@ abstract class PedidosState {
   });
 }
 
-class CarregandoPedidosState extends PedidosState {
-  CarregandoPedidosState({required super.pedidos});
+class PedidosCarregandoPedidosState extends PedidosState {
+  PedidosCarregandoPedidosState({required super.pedidos});
 }
 
 class PedidosCarregadosState extends PedidosState {
   PedidosCarregadosState({required super.pedidos});
+}
+
+class PedidosErroState extends PedidosState {
+  final String cause;
+  PedidosErroState(this.cause, {required super.pedidos});
 }
 
 class PedidosInitialState extends PedidosState {

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lembrete_cakes/Models/pedido.dart';
+import 'package:lembrete_cakes/Styles/input_decorations.dart';
 import 'package:lembrete_cakes/Styles/text_styles.dart';
-import 'package:lembrete_cakes/Views/Widgets/card_pedido.dart';
+import 'package:lembrete_cakes/Features/pedido/components/card_pedido.dart';
 
-import '../common/pedidos_controller/bloc/pedidos_bloc.dart';
+import '../../bloc/pedidos/pedidos_bloc.dart';
 
 class PedidoPage extends StatefulWidget {
   const PedidoPage({
@@ -35,22 +37,48 @@ class _PedidoPageState extends State<PedidoPage> {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         children: [
-          SizedBox(
+          Container(
+            alignment: Alignment.centerLeft,
             width: double.infinity,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Seus pedidos',
-                  style: CustomTextStyles.pinkBigTitle,
-                ),
-              ],
+            child: const Text(
+              'Seus pedidos',
+              style: CustomTextStyles.pinkBigTitle,
+            ),
+          ),
+          Container(
+            width: double.infinity,
+            margin: const EdgeInsets.only(top: 10),
+            child: TextFormField(
+              decoration: CustomInputDecorations.defaultDecoration.copyWith(
+                  hintText: "Pesquise por nome",
+                  suffixIcon: const Icon(Icons.search)),
             ),
           ),
           BlocBuilder<PedidosBloc, PedidosState>(
             bloc: pedidosBlocProvider,
             builder: (context, state) {
-              if (state is CarregandoPedidosState) {
+              if (state is PedidosCarregadosState && state.pedidos.isEmpty) {
+                return Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                          height: 50, width: 50, 'assets/svgs/cupcake.svg'),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        child: Text(
+                            textAlign: TextAlign.center,
+                            'Nenhum pedido encontrado, faça seu primeiro agora!'),
+                      ),
+                      ElevatedButton.icon(
+                          onPressed: () {},
+                          icon: const Icon(Icons.add),
+                          label: const Text("Criar um pedido"))
+                    ],
+                  ),
+                );
+              }
+              if (state is PedidosCarregandoPedidosState) {
                 return const CircularProgressIndicator();
               } else {
                 return Expanded(

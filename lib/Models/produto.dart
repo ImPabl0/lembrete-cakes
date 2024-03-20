@@ -1,24 +1,30 @@
 import 'dart:convert';
 
+import 'package:lembrete_cakes/Models/produto_caracteristica.dart';
+
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class Produto {
   int id;
   String nome;
   String descricao;
+  List<ProdutoCaracteristica> caracteristicas;
   Produto({
     required this.id,
     required this.nome,
     required this.descricao,
+    required this.caracteristicas,
   });
 
   Produto copyWith({
     int? id,
     String? nome,
     String? descricao,
+    List<ProdutoCaracteristica>? caracteristicas,
   }) {
     return Produto(
       id: id ?? this.id,
       nome: nome ?? this.nome,
+      caracteristicas: caracteristicas ?? this.caracteristicas,
       descricao: descricao ?? this.descricao,
     );
   }
@@ -35,6 +41,7 @@ class Produto {
     return Produto(
       id: map['id'] as int,
       nome: map['nome'] as String,
+      caracteristicas: [],
       descricao: map['descricao_produto'] as String,
     );
   }
@@ -42,6 +49,7 @@ class Produto {
     return Produto(
       id: map['id'] as int,
       nome: map['nome'] as String,
+      caracteristicas: [], // Caso implemente conexão externa para receber os produtos isso deve ser mapeado corretamente.
       descricao: map['descricao_produto'] as String,
     );
   }
